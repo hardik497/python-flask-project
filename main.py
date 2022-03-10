@@ -25,7 +25,7 @@ app.config.update(
     MAIL_PASSWORD=  params['gmail-pass']
 )
 mail = Mail(app)
-if(local_server):
+if(local_server): 
     app.config['SQLALCHEMY_DATABASE_URI'] =  params['local_url']
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] =  params['prod_url']
