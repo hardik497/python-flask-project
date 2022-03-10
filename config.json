@@ -1,0 +1,21 @@
+{
+    "params" :
+    {
+        "local_server":"True",
+        "local_url": "mysql://root:@localhost/portfolio",
+        "prod_url":"mysql://root:@localhost/portfolio",
+        "fab_url":"https://facebook.com",
+        "tw_url":"https://twitter.com",
+        "git_url":"https://github.com",
+        "blog_name":"Portfolio",
+        "line":"Hello this for you",
+        "gmail-user":"iamhardik1a@gmail.com",
+        "gmail-pass":"7434004849h",
+        "about":"Hello this portfolio is for you",
+        "no_of_posts":3,
+        "img":"logo.svg",
+        "admin_username":"hk@gmail.com",
+        "admin_password":"hk",
+        "upload_location":"C:\\Users\\lenovo\\AppData\\Local\\Programs\\Python\\Python310\\flask\\static\\assets\\img"
+    }
+}
