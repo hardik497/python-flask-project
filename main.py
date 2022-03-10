@@ -32,7 +32,7 @@ else:
 
 db = SQLAlchemy(app)
 
-class Contact(db.Model):
+class Contact(db.Model): 
     sno = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     phonenumber = db.Column(db.String(20), nullable=False)
