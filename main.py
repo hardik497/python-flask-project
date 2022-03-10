@@ -30,7 +30,7 @@ if(local_server):
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] =  params['prod_url']
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) 
 
 class Contact(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
