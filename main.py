@@ -50,7 +50,7 @@ class Posts(db.Model):
     img_file = db.Column(db.String(12), nullable=False)
  
 
-@app.route("/index  ") 
+@app.route("/index  ")
 def home():
     posts = Posts.query.filter_by().all()
     last = math.ceil(len(posts)/int(params['no_of_posts']))
