@@ -40,7 +40,7 @@ class Contact(db.Model):
     date = db.Column(db.String(120), nullable=True)
     email = db.Column(db.String(12), nullable=False)
     
-class Posts(db.Model):
+class Posts(db.Model): 
     sno = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.String(50000), nullable=False)
@@ -50,7 +50,7 @@ class Posts(db.Model):
     img_file = db.Column(db.String(12), nullable=False)
  
 
-@app.route("/index  ")
+@app.route("/index")
 def home():
     posts = Posts.query.filter_by().all()
     last = math.ceil(len(posts)/int(params['no_of_posts']))
