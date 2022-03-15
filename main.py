@@ -1,8 +1,10 @@
 
-from flask import Flask, redirect,render_template, request,session
+from fileinput import filename
+from flask import Flask, flash, redirect,render_template, request,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 import os
+from sqlalchemy import false
 from werkzeug.utils import secure_filename
 import math
 import json
@@ -17,6 +19,7 @@ local_server  = True
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
 app.config['UPLOAD_FOLDER'] = params['upload_location']
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -97,13 +100,32 @@ def dashboard():
 def about():
     return render_template('about.html',params = params)
 
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route("/upload",methods=['GET','POST'])
 def upload():
     if "user" in session and session['user'] == params['admin_username']:
         if request.method=='POST':
-            f = request.files['file1']
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'],secure_filename(f.filename) ))
-            return render_template('upload.html',params=params)
+            if 'file1' not in request.files:
+                flash('No files part')
+                return redirect('/dash')
+            file = request.files['file1']
+            if file.filename == '':
+                flash('No selected file')
+                return redirect('/dash')
+
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename ))
+        return render_template('upload.html',params=params)#this is path where the files  are stored
+                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+           # f = request.files['file1'] request file from the user
+           
+            
             
 @app.route('/logout')
 def logout():
@@ -186,8 +208,9 @@ def contact():
     return render_template('contact.html',params = params)
 
     
+if __name__ == "__main__":
+    app.run(debug=False,host='0.0.0.0')
 
 
-app.run(debug=True)
 
 

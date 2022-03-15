@@ -103,3 +103,5 @@ def home():
         prev = "/?page="+ str(page-1)
         next = "/?page="+ str(page+1)
     return render_template('index.html',params = params,posts=posts,prev=prev, next=next)
+
+    <button type="submit" class="btn btn-primary">Submit</button>
