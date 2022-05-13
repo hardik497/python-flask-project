@@ -1,6 +1,6 @@
 
 from fileinput import filename
-from flask import Flask, flash, redirect,render_template, request,session
+from flask import Flask, flash, redirect,render_template, request,session,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 import os
@@ -55,7 +55,9 @@ class Posts(db.Model):
 
 @app.route("/index")
 def home():
-    posts = Posts.query.filter_by().all()
+    flash("success")
+    posts = Posts.query.filter_by().all()[0:params['no_of_posts']]
+    
     last = math.ceil(len(posts)/int(params['no_of_posts']))
     page = request.args.get('page')
     if (not str(page).isnumeric()):
@@ -71,7 +73,8 @@ def home():
     else:
         prev = "/?page="+ str(page-1)
         next = "/?page="+ str(page+1)
-    return render_template('index.html', params=params, posts=posts, prev=prev, next=next)
+   
+    return render_template('index.html', params=params, posts=posts,prev=prev,next = next)
 
    #posts = Posts.query.filter_by().all()
     #[0:params['no_post']]
@@ -141,7 +144,6 @@ def delete(sno):
     return redirect("/dash")
 
     
-
 @app.route("/post/<string:post_slug>",methods=['GET'])
 def post_route(post_slug):
     post = Posts.query.filter_by(slug=post_slug).first()
@@ -205,11 +207,11 @@ def contact():
                           recipients = [params['gmail-user']],
                           body = message + "\n" + phone
                           )
+        flash("Thanks for submitting your details","sucess")
     return render_template('contact.html',params = params)
 
 
-if __name__ == "__main__":
-    app.run()
+app.run(debug=True)
 
 
 
